@@ -185,17 +185,6 @@
       "datasourceTemplate": "github-tags",
       "depNameTemplate": "mikefarah/yq",
       "extractVersionTemplate": "^v(?<version>.*)$"
-    },
-    {
-      "customType": "regex",
-      "description": "Bump spec.helmChart.version in plugindefinition.yaml to match Chart.yaml",
-      "fileMatch": [".+/plugindefinition.yaml$"],
-      "matchStrings": [
-        "helmChart:\\s*([\\s\\S]*?)version:\\s*(?<currentValue>\\d+\\.\\d+\\.\\d+)"
-      ],
-      "datasourceTemplate": "file",
-      "depNameTemplate": "{{parentDir}}/charts/Chart.yaml",
-      "versioningTemplate": "helm"
     }
   ],
   "packageRules": [
@@ -286,14 +275,6 @@
         "ghcr.io/open-telemetry/opentelemetry-collector-releases/opentelemetry-collector-contrib"
       ],
       "groupName": "OTEL docker base images"
-    },
-    {
-      "groupName": "{{parentDir}} Helm dependency updates",
-      "matchPaths": [
-        "{{parentDir}}/charts/Chart.yaml",
-        "{{parentDir}}/plugindefinition.yaml"
-      ],
-      "additionalBranchPrefix": "{{parentDir}}-"
     }
   ],
   "separateMinorPatch": true
