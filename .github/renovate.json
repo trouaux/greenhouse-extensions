@@ -299,11 +299,12 @@
       "groupName": "OTEL docker base images"
     },
     {
-      "groupName": "Helm dependency updates",
+      "groupName": "{{parentDir}} Helm dependency updates",
       "matchPaths": [
         "**/Chart.yaml",
         "**/plugindefinition.yaml"
-      ]
+      ],
+      "additionalBranchPrefix": "{{parentDir}}-"
     }
   ],
   "separateMinorPatch": true
