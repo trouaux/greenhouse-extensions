@@ -1,0 +1,39 @@
+name: Bump plugindefinition.yaml version on Chart.yaml change
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  bump-version:
+    if: github.actor == 'renovate[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Find changed Chart.yaml files
+        id: chartdiff
+        run: |
+          git fetch origin ${{ github.base_ref }}
+          # List changed Chart.yaml files
+          git diff --name-only origin/${{ github.base_ref }} HEAD | grep 'Chart.yaml$' || true
+        continue-on-error: true
+
+      - name: Bump version in plugindefinition.yaml
+        if: steps.chartdiff.outputs.stdout != ''
+        run: |
+          git fetch origin ${{ github.base_ref }}
+          for chart in $(git diff --name-only origin/${{ github.base_ref }} HEAD | grep 'Chart.yaml$'); do
+            dir=$(dirname "$chart")
+            newver=$(grep '^version:' "$chart" | awk '{print $2}')
+            plugindef="$dir/plugindefinition.yaml"
+            if [ -f "$plugindef" ]; then
+              sed -i.bak "s/version: .*/version: $newver/" "$plugindef"
+              rm "$plugindef.bak"
+              git config user.name "github-actions[bot]"
+              git config user.email "github-actions[bot]@users.noreply.github.com"
+              git add "$plugindef"
+              git commit -m "chore: bump version in $plugindef to $newver"
+            fi
+          done
+          git push
