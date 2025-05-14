@@ -188,19 +188,8 @@
     },
     {
       "customType": "regex",
-      "description": "Bump spec.version in plugindefinition.yaml to match Chart.yaml",
-      "fileMatch": ["^.*/plugindefinition.yaml$"],
-      "matchStrings": [
-        "spec:\\s*version:\\s*(?<currentValue>\\d+\\.\\d+\\.\\d+)"
-      ],
-      "datasourceTemplate": "file",
-      "depNameTemplate": "{{parentDir}}/charts/Chart.yaml",
-      "versioningTemplate": "helm"
-    },
-    {
-      "customType": "regex",
       "description": "Bump spec.helmChart.version in plugindefinition.yaml to match Chart.yaml",
-      "fileMatch": ["^.*/plugindefinition.yaml$"],
+      "fileMatch": [".+/plugindefinition.yaml$"],
       "matchStrings": [
         "helmChart:\\s*([\\s\\S]*?)version:\\s*(?<currentValue>\\d+\\.\\d+\\.\\d+)"
       ],
@@ -301,7 +290,7 @@
     {
       "groupName": "{{parentDir}} Helm dependency updates",
       "matchPaths": [
-        "{{parentDir}}/Chart.yaml",
+        "{{parentDir}}/charts/Chart.yaml",
         "{{parentDir}}/plugindefinition.yaml"
       ],
       "additionalBranchPrefix": "{{parentDir}}-"
