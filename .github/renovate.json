@@ -288,8 +288,8 @@
     {
       "groupName": "{{parentDir}} Helm dependency updates",
       "matchPaths": [
-        "**/Chart.yaml",
-        "**/plugindefinition.yaml"
+        "{{parentDir}}/Chart.yaml",
+        "{{parentDir}}/plugindefinition.yaml"
       ],
       "additionalBranchPrefix": "{{parentDir}}-"
     }
