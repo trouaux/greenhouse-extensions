@@ -15,9 +15,10 @@ jobs:
         id: chartdiff
         run: |
           git fetch origin ${{ github.base_ref }}
-          # List changed Chart.yaml files
-          git diff --name-only origin/${{ github.base_ref }} HEAD | grep 'charts/Chart.yaml$' || true
-        continue-on-error: true
+          files=$(git diff --name-only origin/${{ github.base_ref }} HEAD | grep 'charts/Chart.yaml$' || true)
+          echo "files<<EOF" >> $GITHUB_OUTPUT
+          echo "$files" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
 
       - name: Bump version in plugindefinition.yaml
         if: steps.chartdiff.outputs.stdout != ''
