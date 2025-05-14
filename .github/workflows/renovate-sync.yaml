@@ -21,7 +21,7 @@ jobs:
           echo "EOF" >> $GITHUB_OUTPUT
 
       - name: Bump version in plugindefinition.yaml
-        if: steps.chartdiff.outputs.stdout != ''
+        if: steps.chartdiff.outputs.files != ''
         run: |
           git fetch origin ${{ github.base_ref }}
           for chart in $(git diff --name-only origin/${{ github.base_ref }} HEAD | grep 'charts/Chart.yaml$'); do
