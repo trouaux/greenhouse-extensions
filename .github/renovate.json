@@ -172,6 +172,28 @@
       "datasourceTemplate": "github-tags",
       "depNameTemplate": "mikefarah/yq",
       "extractVersionTemplate": "^v(?<version>.*)$"
+    },
+    {
+      "customType": "regex",
+      "description": "Bump spec.version in plugindefinition.yaml to match Chart.yaml",
+      "fileMatch": [".*/plugindefinition.yaml$"],
+      "matchStrings": [
+        "spec:\\s*version:\\s*(?<currentValue>\\d+\\.\\d+\\.\\d+)"
+      ],
+      "datasourceTemplate": "file",
+      "depNameTemplate": "**/Chart.yaml",
+      "versioningTemplate": "helm"
+    },
+    {
+      "customType": "regex",
+      "description": "Bump spec.helmChart.version in plugindefinition.yaml to match Chart.yaml",
+      "fileMatch": [".*/plugindefinition.yaml$"],
+      "matchStrings": [
+        "helmChart:\\s*([\\s\\S]*?)version:\\s*(?<currentValue>\\d+\\.\\d+\\.\\d+)"
+      ],
+      "datasourceTemplate": "file",
+      "depNameTemplate": "**/Chart.yaml",
+      "versioningTemplate": "helm"
     }
   ],
   "packageRules": [
@@ -264,9 +286,11 @@
       "groupName": "OTEL docker base images"
     },
     {
-      "matchManagers": ["regex"],
-      "matchPaths": ["Dockerfile.integration-test"],
-      "groupName": "integration-test Dockerfile dependencies"
+      "groupName": "Helm dependency updates",
+      "matchPaths": [
+        "**/Chart.yaml",
+        "**/plugindefinition.yaml"
+      ]
     }
   ],
   "separateMinorPatch": true
