@@ -37,4 +37,5 @@ jobs:
               git commit -m "chore: bump version in $plugindef to $newver"
             fi
           done
+          git pull --rebase origin ${GITHUB_HEAD_REF}
           git push origin HEAD:${GITHUB_HEAD_REF}
