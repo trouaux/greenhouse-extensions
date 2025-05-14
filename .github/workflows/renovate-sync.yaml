@@ -16,17 +16,17 @@ jobs:
         run: |
           git fetch origin ${{ github.base_ref }}
           # List changed Chart.yaml files
-          git diff --name-only origin/${{ github.base_ref }} HEAD | grep 'Chart.yaml$' || true
+          git diff --name-only origin/${{ github.base_ref }} HEAD | grep 'charts/Chart.yaml$' || true
         continue-on-error: true
 
       - name: Bump version in plugindefinition.yaml
         if: steps.chartdiff.outputs.stdout != ''
         run: |
           git fetch origin ${{ github.base_ref }}
-          for chart in $(git diff --name-only origin/${{ github.base_ref }} HEAD | grep 'Chart.yaml$'); do
-            dir=$(dirname "$chart")
+          for chart in $(git diff --name-only origin/${{ github.base_ref }} HEAD | grep 'charts/Chart.yaml$'); do
+            parentdir=$(dirname "$(dirname "$chart")")
             newver=$(grep '^version:' "$chart" | awk '{print $2}')
-            plugindef="$dir/plugindefinition.yaml"
+            plugindef="$parentdir/plugindefinition.yaml"
             if [ -f "$plugindef" ]; then
               sed -i.bak "s/version: .*/version: $newver/" "$plugindef"
               rm "$plugindef.bak"
