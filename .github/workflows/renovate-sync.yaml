@@ -20,22 +20,39 @@ jobs:
           echo "$files" >> $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
 
-      - name: Bump version in plugindefinition.yaml
-        if: steps.chartdiff.outputs.files != ''
+      - name: Determine update level from PR description
+        id: update_level
         run: |
-          git fetch origin ${{ github.base_ref }}
-          for chart in $(git diff --name-only origin/${{ github.base_ref }} HEAD | grep 'charts/Chart.yaml$'); do
-            parentdir=$(dirname "$(dirname "$chart")")
-            newver=$(grep '^version:' "$chart" | awk '{print $2}')
-            plugindef="$parentdir/plugindefinition.yaml"
-            if [ -f "$plugindef" ]; then
-              sed -i.bak "s/version: .*/version: $newver/" "$plugindef"
-              rm "$plugindef.bak"
+          body="${{ github.event.pull_request.body }}"
+          if echo "$body" | grep -iqE '\|[[:space:]]*Update[[:space:]]*\|[[:space:]]*major[[:space:]]*\|'; then
+            echo "level=major" >> $GITHUB_OUTPUT
+          elif echo "$body" | grep -iqE '\|[[:space:]]*Update[[:space:]]*\|[[:space:]]*minor[[:space:]]*\|'; then
+            echo "level=minor" >> $GITHUB_OUTPUT
+          else
+            echo "level=patch" >> $GITHUB_OUTPUT
+          fi
+        
+      - name: Bump spec.version in plugindefinition.yaml
+        run: |
+          for file in */plugindefinition.yaml; do
+              oldver=$(grep 'spec:[[:space:]]*version:' "$file" | awk '{print $2}')
+              IFS='.' read -r major minor patch <<< "$oldver"
+              level="${{ steps.update_level.outputs.level }}"
+              if [ "$level" = "major" ]; then
+              major=$((major+1)); minor=0; patch=0
+              elif [ "$level" = "minor" ]; then
+              minor=$((minor+1)); patch=0
+              else
+              patch=$((patch+1))
+              fi
+              newver="$major.$minor.$patch"
+              sed -i.bak "s/spec:[[:space:]]*version: .*/spec:\
+          version: $newver/" "$file"
+              rm "$file.bak"
               git config user.name "github-actions[bot]"
               git config user.email "github-actions[bot]@users.noreply.github.com"
-              git add "$plugindef"
-              git commit -m "chore: bump version in $plugindef to $newver"
-            fi
+              git add "$file"
+              git commit -m "chore: bump spec.version in $file to $newver"
           done
           git pull --rebase origin ${GITHUB_HEAD_REF}
           git push origin HEAD:${GITHUB_HEAD_REF}
