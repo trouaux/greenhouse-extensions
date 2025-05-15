@@ -84,7 +84,6 @@ jobs:
               echo "No plugindefinition.yaml found for $chart"
             fi
           done
-          git pull --rebase origin ${GITHUB_HEAD_REF}
           git push origin HEAD:${GITHUB_HEAD_REF}
         env:
           files: ${{ steps.chartdiff.outputs.files }}
