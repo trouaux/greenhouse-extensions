@@ -16,9 +16,8 @@ jobs:
         run: |
           git fetch origin ${{ github.base_ref }}
           files=$(git diff --name-only origin/${{ github.base_ref }} HEAD | grep 'charts/Chart.yaml$' || true)
-          echo "files<<EOF" >> $GITHUB_OUTPUT
-          echo "$files" >> $GITHUB_OUTPUT
-          echo "EOF" >> $GITHUB_OUTPUT
+          echo $files
+          echo "files<<EOF"$'\n'"$files"$'\n'"EOF" >> $GITHUB_OUTPUT
 
       - name: Determine update level from PR description
         id: update_level
@@ -80,7 +79,7 @@ jobs:
               git config user.name "github-actions[bot]"
               git config user.email "github-actions[bot]@users.noreply.github.com"
               git add "$plugin_yaml"
-              git commit -m "chore: bump spec.helmChart.version in $plugin_yaml to $chart_version"
+              git commit -m "chore: bump versions in $plugin_yaml"
             else
               echo "No plugindefinition.yaml found for $chart"
             fi
