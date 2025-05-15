@@ -24,10 +24,3 @@ jobs:
         id: update_level
         run: |
           body="${{ github.event.pull_request.body }}"
-        
-      - name: Bump spec.version in plugindefinition.yaml
-        run: |
-          echo "${{ steps.chartdiff.outputs.files }}" | while read -r file; do
-          [ -z "$file" ] && continue
-            echo $file
-          done
