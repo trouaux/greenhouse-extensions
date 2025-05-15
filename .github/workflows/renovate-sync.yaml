@@ -24,30 +24,10 @@ jobs:
         id: update_level
         run: |
           body="${{ github.event.pull_request.body }}"
-          echo "$body" | awk -F'|' '/\|/ && !/---/ && /->/ {gsub(/^[ \t]+|[ \t]+$/, "", $3); print $3}' >> $GITHUB_OUTPUT
         
       - name: Bump spec.version in plugindefinition.yaml
         run: |
           echo "${{ steps.chartdiff.outputs.files }}" | while read -r file; do
           [ -z "$file" ] && continue
             echo $file
-            oldver=$(grep 'spec:[[:space:]]*version:' "$file" | awk '{print $2}')
-            echo $oldver
-            level="${{ steps.update_level.outputs.level }}"
-            echo "$level"
-            if [ "$level" = "major" ]; then
-            major=$((major+1)); minor=0; patch=0
-            elif [ "$level" = "minor" ]; then
-            minor=$((minor+1)); patch=0
-            else
-            patch=$((patch+1))
-            fi
-            newver="$major.$minor.$patch"
-
-            git config user.name "github-actions[bot]"
-            git config user.email "github-actions[bot]@users.noreply.github.com"
-            git add "$file"
-            git commit -m "chore: bump spec.version in $file to $newver"
           done
-          git pull --rebase origin ${GITHUB_HEAD_REF}
-          git push origin HEAD:${GITHUB_HEAD_REF}
