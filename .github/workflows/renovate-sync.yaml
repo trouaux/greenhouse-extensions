@@ -23,4 +23,6 @@ jobs:
       - name: Determine update level from PR description
         id: update_level
         run: |
-          body="${{ github.event.pull_request.body }}"
+          body="$PR_BODY"
+        env:
+          PR_BODY: ${{ github.event.pull_request.body }}
