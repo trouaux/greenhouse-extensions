@@ -34,21 +34,27 @@ jobs:
         
       - name: Bump spec.version in plugindefinition.yaml
         run: |
-          for file in */plugindefinition.yaml; do
-              oldver=$(grep 'spec:[[:space:]]*version:' "$file" | awk '{print $2}')
-              IFS='.' read -r major minor patch <<< "$oldver"
-              level="${{ steps.update_level.outputs.level }}"
-              if [ "$level" = "major" ]; then
-              major=$((major+1)); minor=0; patch=0
-              elif [ "$level" = "minor" ]; then
-              minor=$((minor+1)); patch=0
-              else
-              patch=$((patch+1))
-              fi
-              newver="$major.$minor.$patch"
-              sed -i.bak "s/spec:[[:space:]]*version: .*/spec:\
+          echo "${{ steps.chartdiff.outputs.files }}" | while read -r file; do
+          [ -z "$file" ] && continue
+            echo $file
+            oldver=$(grep 'spec:[[:space:]]*version:' "$file" | awk '{print $2}')
+            echo $oldver
+            IFS='.' read -r major minor patch <<< "$oldver"
+            echo "IFS"
+            level="${{ steps.update_level.outputs.level }}"
+            echo "level"
+            if [ "$level" = "major" ]; then
+            major=$((major+1)); minor=0; patch=0
+            elif [ "$level" = "minor" ]; then
+            minor=$((minor+1)); patch=0
+            else
+            patch=$((patch+1))
+            fi
+            newver="$major.$minor.$patch"
+            sed -i.bak "s/spec:[[:space:]]*version: .*/spec:\
           version: $newver/" "$file"
               rm "$file.bak"
+
               git config user.name "github-actions[bot]"
               git config user.email "github-actions[bot]@users.noreply.github.com"
               git add "$file"
