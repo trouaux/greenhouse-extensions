@@ -24,13 +24,7 @@ jobs:
         id: update_level
         run: |
           body="${{ github.event.pull_request.body }}"
-          if echo "$body" | grep -iqE '\|[[:space:]]*Update[[:space:]]*\|[[:space:]]*major[[:space:]]*\|'; then
-            echo "level=major" >> $GITHUB_OUTPUT
-          elif echo "$body" | grep -iqE '\|[[:space:]]*Update[[:space:]]*\|[[:space:]]*minor[[:space:]]*\|'; then
-            echo "level=minor" >> $GITHUB_OUTPUT
-          else
-            echo "level=patch" >> $GITHUB_OUTPUT
-          fi
+          echo "$body" | awk -F'|' '/\|/ && !/---/ && /->/ {gsub(/^[ \t]+|[ \t]+$/, "", $3); print $3}' >> $GITHUB_OUTPUT
         
       - name: Bump spec.version in plugindefinition.yaml
         run: |
