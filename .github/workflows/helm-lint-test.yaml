@@ -2,9 +2,6 @@ name: "Helm lint and tests"
 on:
   pull_request:
     types: [opened, synchronize, reopened]
-  push:
-    branches:
-      - 'renovate/**'
 
 env:
   REGISTRY: ghcr.io

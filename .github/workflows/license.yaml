@@ -2,9 +2,6 @@ name: Check & Fix License Header
 on:
   pull_request:
     types: [opened, synchronize, reopened]
-  push:
-    branches:
-      - 'renovate/**'
 
 jobs:
   build-license-eye:
