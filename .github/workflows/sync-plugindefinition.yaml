@@ -91,4 +91,4 @@ jobs:
         env:
           files: ${{ steps.chartdiff.outputs.files }}
           UPDATE_LEVEL: ${{ steps.update_level.outputs.update_level }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GH_PAT }}
