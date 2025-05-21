@@ -274,5 +274,5 @@
       "groupName": "Makefile dependencies"
     }
   ],
-  "separateMinorPatch": true
+  "separateMinorPatch": false
 }
