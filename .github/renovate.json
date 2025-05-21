@@ -159,7 +159,7 @@
       "datasourceTemplate": "github-tags",
       "depNameTemplate": "grpc-ecosystem/grpc-health-probe",
       "extractVersionTemplate": "^v(?<version>.*)$",
-      "versioning": "semver"
+      "versioningTemplate": "semver"
     },
     {
       "customType": "regex",
