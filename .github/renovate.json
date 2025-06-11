@@ -206,6 +206,7 @@
       "minimumReleaseAge": "7 days",
       "additionalBranchPrefix": "{{parentDir}}-",
       "bumpVersion": "patch",
+      "groupName": "{{{fileName}}} helm chart updates",
       "postUpdateOptions": [
         "helmUpdateSubChartArchives"
       ]
@@ -220,6 +221,7 @@
       "minimumReleaseAge": "14 days",
       "additionalBranchPrefix": "{{parentDir}}-",
       "bumpVersion": "minor",
+      "groupName": "{{{fileName}}} helm chart updates",
       "postUpdateOptions": [
         "helmUpdateSubChartArchives"
       ]
@@ -234,6 +236,7 @@
       "minimumReleaseAge": "14 days",
       "additionalBranchPrefix": "{{parentDir}}-",
       "bumpVersion": "major",
+      "groupName": "{{{fileName}}} helm chart updates",
       "postUpdateOptions": [
         "helmUpdateSubChartArchives"
       ]
@@ -251,7 +254,8 @@
       ],
       "ignorePaths": [
         "**/cert-manager/charts/**"
-      ]
+      ],
+      "groupName": "{{{fileName}}} helm chart updates"
     },
     {
       "matchDatasources": [
