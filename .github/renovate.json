@@ -224,7 +224,7 @@
       "minimumReleaseAge": "14 days",
       "additionalBranchPrefix": "{{parentDir}}-",
       "bumpVersion": "minor",
-      "groupName": "{{{packagePath}}} helm chart updates",
+      "groupName": "{{{packageFile}}} helm chart updates",
       "postUpdateOptions": [
         "helmUpdateSubChartArchives"
       ],
