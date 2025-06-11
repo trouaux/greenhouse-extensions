@@ -206,7 +206,6 @@
       "minimumReleaseAge": "7 days",
       "additionalBranchPrefix": "{{parentDir}}-",
       "bumpVersion": "patch",
-      "groupName": "{{{fileName}}} helm chart updates",
       "postUpdateOptions": [
         "helmUpdateSubChartArchives"
       ]
@@ -221,7 +220,6 @@
       "minimumReleaseAge": "14 days",
       "additionalBranchPrefix": "{{parentDir}}-",
       "bumpVersion": "minor",
-      "groupName": "{{{fileName}}} helm chart updates",
       "postUpdateOptions": [
         "helmUpdateSubChartArchives"
       ]
@@ -236,7 +234,6 @@
       "minimumReleaseAge": "14 days",
       "additionalBranchPrefix": "{{parentDir}}-",
       "bumpVersion": "major",
-      "groupName": "{{{fileName}}} helm chart updates",
       "postUpdateOptions": [
         "helmUpdateSubChartArchives"
       ]
@@ -254,8 +251,7 @@
       ],
       "ignorePaths": [
         "**/cert-manager/charts/**"
-      ],
-      "groupName": "{{{fileName}}} helm chart updates"
+      ]
     },
     {
       "matchDatasources": [
@@ -268,15 +264,23 @@
       "groupName": "OTEL docker base images"
     },
     {
-      "matchManagers": ["regex"],
-      "matchPaths": ["Dockerfile.integration-test"],
+      "matchManagers": [
+        "custom.regex"
+      ],
+      "matchFileNames": [
+        "Dockerfile.integration-test"
+      ],
       "groupName": "integration-test Dockerfile dependencies"
     },
     {
-      "matchManagers": ["regex"],
-      "matchPaths": ["Makefile"],
+      "matchManagers": [
+        "custom.regex"
+      ],
+      "matchFileNames": [
+        "Makefile"
+      ],
       "groupName": "Makefile dependencies"
     }
   ],
-  "separateMinorPatch": false
+  "separateMinorPatch": true
 }
