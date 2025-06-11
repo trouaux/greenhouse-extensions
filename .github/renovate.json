@@ -209,6 +209,9 @@
       "groupName": "{{{fileName}}} helm chart updates",
       "postUpdateOptions": [
         "helmUpdateSubChartArchives"
+      ],
+      "ignorePaths": [
+        "**/cert-manager/charts/**"
       ]
     },
     {
@@ -224,6 +227,9 @@
       "groupName": "{{{fileName}}} helm chart updates",
       "postUpdateOptions": [
         "helmUpdateSubChartArchives"
+      ],
+      "ignorePaths": [
+        "**/cert-manager/charts/**"
       ]
     },
     {
@@ -239,6 +245,9 @@
       "groupName": "{{{fileName}}} helm chart updates",
       "postUpdateOptions": [
         "helmUpdateSubChartArchives"
+      ],
+      "ignorePaths": [
+        "**/cert-manager/charts/**"
       ]
     },
     {
@@ -247,15 +256,6 @@
         "npm"
       ],
       "minimumReleaseAge": "14 days"
-    },
-    {
-      "matchManagers": [
-        "helmv3"
-      ],
-      "groupName": "{{{fileName}}} helm chart updates",
-      "ignorePaths": [
-        "**/cert-manager/charts/**"
-      ]
     },
     {
       "matchDatasources": [
