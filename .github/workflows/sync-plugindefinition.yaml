@@ -49,9 +49,11 @@ jobs:
           PR_BODY: ${{ github.event.pull_request.body }}
       
       - name: Sync plugindefinition.yaml version with Chart.yaml
+        id: sync-versions
         if: steps.update_level.outputs.update_level != ''
         run: |
           set -e
+          changes_made=false
           for chart in ${{ steps.chartdiff.outputs.files }}; do
             # Get the root directory (parent of charts/)
             root_dir=$(dirname "$(dirname "$chart")")
@@ -89,12 +91,39 @@ jobs:
               git config user.email "github-actions[bot]@users.noreply.github.com"
               git add "$plugin_yaml"
               git commit -m "chore: bump versions in $plugin_yaml"
+              changes_made=true
             else
               echo "No plugindefinition.yaml found for $chart"
             fi
           done
-          git push origin HEAD:${GITHUB_HEAD_REF}
+          
+          if [ "$changes_made" = true ]; then
+            git push origin HEAD:${GITHUB_HEAD_REF}
+            echo "changes_made=true" >> $GITHUB_OUTPUT
+          fi
         env:
           files: ${{ steps.chartdiff.outputs.files }}
           UPDATE_LEVEL: ${{ steps.update_level.outputs.update_level }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Trigger other workflows
+        if: steps.sync-versions.outputs.changes_made == 'true'
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            // Trigger helm-lint-test workflow
+            await github.rest.actions.createWorkflowDispatch({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              workflow_id: 'helm-lint-test.yaml',
+              ref: '${{ github.head_ref }}'
+            });
+            
+            // Trigger helm-docs workflow  
+            await github.rest.actions.createWorkflowDispatch({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              workflow_id: 'helm-docs.yaml',
+              ref: '${{ github.head_ref }}'
+            });
