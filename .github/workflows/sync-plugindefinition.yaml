@@ -6,6 +6,8 @@ on:
     paths:
       - "**/*/Chart.yaml"
       - "**/*/*/Chart.yaml"
+      - "**/*/values.yaml"
+      - "**/*/*/values.yaml"
 permissions:
   actions: write
   contents: write
