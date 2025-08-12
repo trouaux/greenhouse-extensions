@@ -8,6 +8,7 @@ on:
       - "**/*/*/Chart.yaml"
 permissions:
   pull-requests: write
+  contents: write
 
 jobs:
   bump-version:
@@ -16,7 +17,8 @@ jobs:
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
         with:
-          persist-credentials: false
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Find changed Chart.yaml files
         id: chartdiff
@@ -91,8 +93,7 @@ jobs:
               echo "No plugindefinition.yaml found for $chart"
             fi
           done
-          git pull --rebase origin ${GITHUB_HEAD_REF}
-          git push https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git HEAD:${GITHUB_HEAD_REF}
+          git push origin HEAD:${GITHUB_HEAD_REF}
         env:
           files: ${{ steps.chartdiff.outputs.files }}
           UPDATE_LEVEL: ${{ steps.update_level.outputs.update_level }}
