@@ -18,14 +18,6 @@ jobs:
         with:
           persist-credentials: false
 
-      - name: Generate GitHub App Token
-        id: github-app-token
-        uses: actions/create-github-app-token@v1
-        with:
-          app-id: ${{ secrets.CLOUDOPERATOR_APP_ID }}
-          private-key: ${{ secrets.CLOUDOPERATOR_APP_PRIVATE_KEY }}
-          permission-contents: write
-
       - name: Find changed Chart.yaml files
         id: chartdiff
         run: |
@@ -104,4 +96,4 @@ jobs:
         env:
           files: ${{ steps.chartdiff.outputs.files }}
           UPDATE_LEVEL: ${{ steps.update_level.outputs.update_level }}
-          GITHUB_TOKEN: ${{ steps.github-app-token.outputs.token }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
