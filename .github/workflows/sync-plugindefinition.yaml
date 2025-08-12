@@ -114,6 +114,24 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             const repoUrl = `https://github.com/${context.repo.owner}/${context.repo.repo}`;
+            const triggeredWorkflows = [];
+            
+            // Function to get latest run ID for a workflow
+            async function getLatestRunId(workflowId) {
+              try {
+                const { data: runs } = await github.rest.actions.listWorkflowRuns({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  workflow_id: workflowId,
+                  per_page: 1,
+                  page: 1
+                });
+                return runs.workflow_runs[0]?.id;
+              } catch (error) {
+                console.log(`Failed to get run ID for ${workflowId}:`, error.message);
+                return null;
+              }
+            }
             
             // Trigger helm-lint-test workflow
             try {
@@ -124,6 +142,22 @@ jobs:
                 ref: '${{ github.head_ref }}'
               });
               console.log('✅ Triggered helm-lint-test workflow');
+              
+              // Wait a moment for the run to be created
+              await new Promise(resolve => setTimeout(resolve, 2000));
+              
+              const runId = await getLatestRunId('helm-lint-test.yaml');
+              if (runId) {
+                triggeredWorkflows.push({
+                  name: 'Helm Lint & Test',
+                  url: `${repoUrl}/actions/runs/${runId}`
+                });
+              } else {
+                triggeredWorkflows.push({
+                  name: 'Helm Lint & Test',
+                  url: `${repoUrl}/actions/workflows/helm-lint-test.yaml`
+                });
+              }
             } catch (error) {
               console.log('❌ Failed to trigger helm-lint-test:', error.message);
             }
@@ -137,11 +171,29 @@ jobs:
                 ref: '${{ github.head_ref }}'
               });
               console.log('✅ Triggered helm-docs workflow');
+              
+              // Wait a moment for the run to be created
+              await new Promise(resolve => setTimeout(resolve, 2000));
+              
+              const runId = await getLatestRunId('helm-docs.yaml');
+              if (runId) {
+                triggeredWorkflows.push({
+                  name: 'Helm Docs',
+                  url: `${repoUrl}/actions/runs/${runId}`
+                });
+              } else {
+                triggeredWorkflows.push({
+                  name: 'Helm Docs',
+                  url: `${repoUrl}/actions/workflows/helm-docs.yaml`
+                });
+              }
             } catch (error) {
               console.log('❌ Failed to trigger helm-docs:', error.message);
             }
             
-            // Comment on PR
+            // Create comment with specific run links if available
+            const workflowLinks = triggeredWorkflows.map(wf => `- [${wf.name}](${wf.url})`).join('\n');
+            
             await github.rest.issues.createComment({
               owner: context.repo.owner,
               repo: context.repo.repo,
@@ -151,8 +203,7 @@ jobs:
               Plugin versions have been synchronized and additional workflows have been triggered.
 
               📋 **View triggered workflows:**
-              - [Helm Lint & Test](${repoUrl}/actions/workflows/helm-lint-test.yaml)
-              - [Helm Docs](${repoUrl}/actions/workflows/helm-docs.yaml)
+              ${workflowLinks}
 
               *Note: Manually triggered workflows run independently and may not appear as PR status checks.*`
-            });
+                          });
