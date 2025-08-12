@@ -105,20 +105,3 @@ jobs:
           files: ${{ steps.chartdiff.outputs.files }}
           UPDATE_LEVEL: ${{ steps.update_level.outputs.update_level }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Trigger other workflows via repository dispatch
-        if: steps.sync-versions.outputs.changes_made == 'true'
-        uses: actions/github-script@v7
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          script: |
-            await github.rest.repos.createDispatchEvent({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              event_type: 'sync-plugindefinition',
-              client_payload: {
-                pr_number: context.issue.number,
-                head_ref: '${{ github.head_ref }}',
-                base_ref: '${{ github.base_ref }}'
-              }
-            });
