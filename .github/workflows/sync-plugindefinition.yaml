@@ -52,6 +52,11 @@ jobs:
         env:
           PR_BODY: ${{ github.event.pull_request.body }}
 
+      - name: Setup Git config
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
       - name: Bump Chart.yaml versions for values.yaml changes
         id: bump-chart
         if: steps.filediff.outputs.values_files != ''
@@ -90,9 +95,7 @@ jobs:
               # Update Chart.yaml
               yq e -i ".version = \"$new_version\"" "$chart_file"
               echo "Updated $chart_file from $current_version to $new_version (level: $UPDATE_LEVEL)"
-              
-              git config user.name "github-actions[bot]"
-              git config user.email "github-actions[bot]@users.noreply.github.com"
+
               git add "$chart_file"
               
               changes_made=true
