@@ -70,13 +70,26 @@ jobs:
               current_version=$(yq e '.version' "$chart_file")
               IFS='.' read -r major minor patch <<< "$current_version"
               
-              # Bump patch version (since values.yaml changes are typically patch-level)
-              patch=$((patch + 1))
+              # Bump version based on update_level
+              case "$UPDATE_LEVEL" in
+                major)
+                  major=$((major + 1))
+                  minor=0
+                  patch=0
+                  ;;
+                minor)
+                  minor=$((minor + 1))
+                  patch=0
+                  ;;
+                patch|*)
+                  patch=$((patch + 1))
+                  ;;
+              esac
               new_version="$major.$minor.$patch"
               
               # Update Chart.yaml
               yq e -i ".version = \"$new_version\"" "$chart_file"
-              echo "Updated $chart_file from $current_version to $new_version"
+              echo "Updated $chart_file from $current_version to $new_version (level: $UPDATE_LEVEL)"
               
               git config user.name "github-actions[bot]"
               git config user.email "github-actions[bot]@users.noreply.github.com"
@@ -87,12 +100,14 @@ jobs:
           done
           
           if [ "$changes_made" = true ]; then
-            git commit -m "chore: bump chart versions for values.yaml changes"
+            git commit -m "chore: bump chart versions for values.yaml changes ($UPDATE_LEVEL)"
             # Add the updated Chart.yaml files to the list for processing
             updated_charts=$(echo "${{ steps.filediff.outputs.values_files }}" | sed 's|values\.yaml|Chart.yaml|g')
             echo "updated_charts<<EOF"$'\n'"$updated_charts"$'\n'"EOF" >> $GITHUB_OUTPUT
             echo "changes_made=true" >> $GITHUB_OUTPUT
           fi
+        env:
+          UPDATE_LEVEL: ${{ steps.update_level.outputs.update_level }}
 
       - name: Sync plugindefinition.yaml version with Chart.yaml
         id: sync-versions
