@@ -9,6 +9,7 @@ on:
 permissions:
   actions: write
   contents: write
+  pull-requests: write
 
 jobs:
   bump-version:
@@ -105,3 +106,53 @@ jobs:
           files: ${{ steps.chartdiff.outputs.files }}
           UPDATE_LEVEL: ${{ steps.update_level.outputs.update_level }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Trigger other workflows
+        if: steps.sync-versions.outputs.changes_made == 'true'
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const repoUrl = `https://github.com/${context.repo.owner}/${context.repo.repo}`;
+            
+            // Trigger helm-lint-test workflow
+            try {
+              await github.rest.actions.createWorkflowDispatch({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                workflow_id: 'helm-lint-test.yaml',
+                ref: '${{ github.head_ref }}'
+              });
+              console.log('✅ Triggered helm-lint-test workflow');
+            } catch (error) {
+              console.log('❌ Failed to trigger helm-lint-test:', error.message);
+            }
+            
+            // Trigger helm-docs workflow
+            try {
+              await github.rest.actions.createWorkflowDispatch({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                workflow_id: 'helm-docs.yaml',
+                ref: '${{ github.head_ref }}'
+              });
+              console.log('✅ Triggered helm-docs workflow');
+            } catch (error) {
+              console.log('❌ Failed to trigger helm-docs:', error.message);
+            }
+            
+            // Comment on PR
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              body: `🤖 **Version Bump Complete** ✅
+
+              Plugin versions have been synchronized and additional workflows have been triggered.
+
+              📋 **View triggered workflows:**
+              - [Helm Lint & Test](${repoUrl}/actions/workflows/helm-lint-test.yaml)
+              - [Helm Docs](${repoUrl}/actions/workflows/helm-docs.yaml)
+
+              *Note: Manually triggered workflows run independently and may not appear as PR status checks.*`
+            });
