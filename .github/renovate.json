@@ -180,7 +180,6 @@
       "matchFileNames": ["**/values.yaml"],
       "additionalBranchPrefix": "{{parentDir}}-",
       "bumpVersion": "patch",
-      "groupName": "{{parentDir}} values updates",
       "postUpdateOptions": ["helmUpdateSubChartArchives"]
     },
     {
