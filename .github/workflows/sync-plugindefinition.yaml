@@ -115,7 +115,7 @@ jobs:
             await github.rest.repos.createDispatchEvent({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              event_type: 'plugin-versions-updated',
+              event_type: 'sync-plugindefinition',
               client_payload: {
                 pr_number: context.issue.number,
                 head_ref: '${{ github.head_ref }}',
