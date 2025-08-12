@@ -7,7 +7,7 @@ on:
       - "**/*/Chart.yaml"
       - "**/*/*/Chart.yaml"
 permissions:
-  pull-requests: write
+  actions: write
   contents: write
 
 jobs:
