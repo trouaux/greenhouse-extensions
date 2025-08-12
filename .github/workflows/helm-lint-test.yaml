@@ -1,11 +1,12 @@
 name: "Helm lint and tests"
 on:
+  repository_dispatch:
+    types: [plugin-versions-updated]
   pull_request:
     types: [opened, synchronize, reopened]
   push:
     branches:
       - main
-  workflow_dispatch: {}
 
 env:
   REGISTRY: ghcr.io

@@ -1,7 +1,8 @@
 name: "Helm Docs Check"
 
 on:
-  workflow_dispatch: {}
+  repository_dispatch:
+    types: [sync-plugindefinition]
   pull_request:
     types: [opened, synchronize, reopened]
     paths:
