@@ -10,12 +10,10 @@ env:
   REGISTRY: ghcr.io
   HELM_VERSION: v3.17.0
   PYTHON_VERSION: "3.13"
-  CT_CONFIG: .github/configs/helm-lint-test.yaml
-  KIND_CLUSTER_NAME: chart-testing
 
 jobs:
-  e2e-k8s:
-    runs-on: macOS
+  e2e-flux-k8s:
+    runs-on: self-hosted
 
     steps:
       - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5

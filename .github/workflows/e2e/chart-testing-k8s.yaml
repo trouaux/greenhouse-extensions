@@ -1,6 +1,5 @@
-name: "Helm lint and tests"
+name: "Helm Chart testing"
 on:
-  workflow_dispatch: {}
   pull_request:
     types: [opened, synchronize, reopened]
   push:
@@ -12,11 +11,10 @@ env:
   HELM_VERSION: v3.17.0
   PYTHON_VERSION: "3.13"
   CT_CONFIG: .github/configs/helm-lint-test.yaml
-  KIND_CLUSTER_NAME: chart-testing
 
 jobs:
-  helm-lint-test:
-    runs-on: macOS
+  helm-chart-testing:
+    runs-on: self-hosted
     steps:
       - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5
         with:
@@ -39,7 +37,7 @@ jobs:
       - name: Run chart-testing (list-changed)
         id: chart-list-changed
         run: |
-          changed_charts=$(ct list-changed --config .github/configs/helm-lint-test.yaml --target-branch ${{ github.event.repository.default_branch }})
+          changed_charts=$(ct list-changed --config ${{ env.CT_CONFIG }} --target-branch ${{ github.event.repository.default_branch }})
           if [[ -n "$changed_charts" ]]; then
             echo "changed=true" >> "$GITHUB_OUTPUT"
             echo "$changed_charts" > changed_charts.txt
@@ -81,7 +79,7 @@ jobs:
 
       - name: Run chart integration tests
         if: steps.chart-list-changed.outputs.changed == 'true'
-        run: ct lint-and-install --config .github/configs/helm-lint-test.yaml
+        run: ct lint-and-install --config ${{ env.CT_CONFIG }}
       
       - name: Print pod logs on failure
         if: failure() && steps.chart-list-changed.outputs.changed == 'true'
