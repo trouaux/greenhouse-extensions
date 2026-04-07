@@ -164,6 +164,12 @@ jobs:
           
           echo "✅ Files copied successfully"
 
+      - name: Change to greenhouse directory
+        if: steps.detect-changes.outputs.changed == 'true'
+        run: |
+          cd greenhouse
+          echo "GITHUB_WORKSPACE=${{ github.workspace }}/greenhouse" >> $GITHUB_ENV
+
       - name: Run E2E tests
         if: steps.detect-changes.outputs.changed == 'true'
         id: e2e
