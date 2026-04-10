@@ -349,7 +349,7 @@
       "bumpVersions": [
         {
           "filePatterns": ["{{packageFileDir}}/plugindefinition.yaml"],
-          "matchStrings": ["^\\s*version:\\s*(?<version>\\d+\\.\\d+\\.\\d+)"],
+          "matchStrings": ["spec:\\s*\\n\\s+version:\\s*(?<version>\\d+\\.\\d+\\.\\d+)"],
           "bumpType": "{{#if isPatch}}patch{{else if isMajor}}major{{else}}minor{{/if}}"
         }
       ]
