@@ -15,7 +15,7 @@ permissions:
 jobs:
   sync-versions:
     name: Sync Chart.yaml and plugindeifnition.yaml versions
-    if: github.actor == 'renovate[bot]'
+    if: github.actor == 'renovate[bot]DISABLED'
     runs-on: ubuntu-latest
     steps:
       - name: Generate GitHub App Token

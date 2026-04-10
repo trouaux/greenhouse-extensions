@@ -341,7 +341,8 @@
       "description": "Automatically bump spec.version in plugindefinition.yaml when helmChart.version is updated by custom regex managers. The bumpType is determined by the update type (patch/minor/major) of the helmChart.version.",
       "matchFileNames": [
         "ingress-nginx/plugindefinition.yaml",
-        "external-dns/plugindefinition.yaml"
+        "external-dns/plugindefinition.yaml",
+        "reloader/plugindefinition.yaml"
       ],
       "matchManagers": [
         "custom.regex"
