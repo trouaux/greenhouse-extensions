@@ -246,7 +246,7 @@
       ],
       "bumpVersions": [
         {
-          "filePatterns": ["../plugindefinition.yaml"],
+          "filePatterns": ["{{replace '/charts$' '' packageFileDir}}/plugindefinition.yaml"],
           "matchStrings": ["spec:\\s*\\n\\s+version:\\s*(?<version>\\d+\\.\\d+\\.\\d+)"],
           "bumpType": "{{#if isPatch}}patch{{else if isMajor}}major{{else}}minor{{/if}}"
         }
@@ -272,7 +272,7 @@
       ],
       "bumpVersions": [
         {
-          "filePatterns": ["../plugindefinition.yaml"],
+          "filePatterns": ["{{replace '/charts$' '' packageFileDir}}/plugindefinition.yaml"],
           "matchStrings": ["spec:\\s*\\n\\s+version:\\s*(?<version>\\d+\\.\\d+\\.\\d+)"],
           "bumpType": "{{#if isPatch}}patch{{else if isMajor}}major{{else}}minor{{/if}}"
         }
@@ -298,7 +298,7 @@
       ],
       "bumpVersions": [
         {
-          "filePatterns": ["../plugindefinition.yaml"],
+          "filePatterns": ["{{replace '/charts$' '' packageFileDir}}/plugindefinition.yaml"],
           "matchStrings": ["spec:\\s*\\n\\s+version:\\s*(?<version>\\d+\\.\\d+\\.\\d+)"],
           "bumpType": "{{#if isPatch}}patch{{else if isMajor}}major{{else}}minor{{/if}}"
         }
