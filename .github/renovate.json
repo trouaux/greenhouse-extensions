@@ -13,12 +13,18 @@
         "/^ingress-nginx/plugindefinition\\.yaml$/"
       ],
       "matchStrings": [
-        "description:[^\\n]*\\n\\s+version:\\s*(?<currentValue>\\d+\\.\\d+\\.\\d+)",
         "helmChart:\\s*name:\\s*.*\\s*repository:\\s*.*\\s*version\\s*\\:\\s*v?(?<currentValue>(?:\\d+\\.){0,2}\\d+)"
       ],
       "datasourceTemplate": "github-tags",
       "depNameTemplate": "kubernetes/ingress-nginx",
-      "extractVersionTemplate": "^helm-chart-(?<version>.*)$"
+      "extractVersionTemplate": "^helm-chart-(?<version>.*)$",
+      "bumpVersions": [
+        {
+          "filePatterns": ["ingress-nginx/plugindefinition.yaml"],
+          "matchStrings": ["version:\\s*(?<version>\\d+\\.\\d+\\.\\d+)"],
+          "bumpType": "{{#if isPatch}}patch{{else}}{{#if isMinor}}minor{{else}}major{{/if}}{{/if}}"
+        }
+      ]
     },
     {
       "customType": "regex",
