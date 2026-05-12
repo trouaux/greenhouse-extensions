@@ -21,20 +21,6 @@
     },
     {
       "customType": "regex",
-      "description": "Bump absent-metrics-operator image tag in kube-monitoring values.yaml",
-      "managerFilePatterns": [
-        "/^kube-monitoring/charts/values\\.yaml$/"
-      ],
-      "matchStrings": [
-        "absentMetricsOperator:[\\s\\S]*?image:[\\s\\S]*?registry:\\s*ghcr\\.io[\\s\\S]*?repository:\\s*cloudoperators/absent-metrics-operator[\\s\\S]*?tag:\\s*\"(?<currentValue>sha-[a-f0-9]+)\""
-      ],
-      "datasourceTemplate": "docker",
-      "depNameTemplate": "ghcr.io/cloudoperators/absent-metrics-operator",
-      "versioningTemplate": "docker",
-      "autoReplaceStringTemplate": "{{#if newDigest}}tag: \"{{{newValue}}}\"@{{{newDigest}}}{{else}}tag: \"{{{newValue}}}\"{{/if}}"
-    },
-    {
-      "customType": "regex",
       "description": "Bump external-dns version in the plugindefinition",
       "managerFilePatterns": [
         "/^external-dns.plugindefinition.yaml$/"
@@ -334,6 +320,15 @@
       ]
     },
     {
+      "matchManagers": [
+        "helmv3"
+      ],
+      "matchFileNames": [
+        "kube-monitoring/charts/value.yaml"
+      ],
+      "pinDigests": true
+    },
+    {
       "groupName": "npm dependencies",
       "matchDatasources": [
         "npm"
@@ -367,13 +362,6 @@
         "Makefile"
       ],
       "groupName": "Makefile dependencies"
-    },
-    {
-      "description": "Only consider sha- prefixed tags for absent-metrics-operator; docker versioning uses registry creation timestamps for ordering",
-      "matchPackageNames": ["ghcr.io/cloudoperators/absent-metrics-operator"],
-      "matchManagers": ["custom.regex"],
-      "allowedVersions": "/^sha-[a-f0-9]+$/",
-      "pinDigests": true
     },
     {
       "matchManagers": [
