@@ -320,9 +320,6 @@
       ]
     },
     {
-      "matchManagers": [
-        "helm-values"
-      ],
       "matchFileNames": [
         "kube-monitoring/charts/values.yaml"
       ],
