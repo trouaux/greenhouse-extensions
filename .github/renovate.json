@@ -369,6 +369,12 @@
       "groupName": "Makefile dependencies"
     },
     {
+      "description": "Allow large major increments for SHA-based absent-metrics-operator tags",
+      "matchPackageNames": ["ghcr.io/cloudoperators/absent-metrics-operator"],
+      "matchManagers": ["custom.regex"],
+      "maxMajorIncrement": 9999999
+    },
+    {
       "matchManagers": [
         "custom.regex"
       ],
