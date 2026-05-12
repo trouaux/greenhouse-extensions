@@ -191,20 +191,6 @@
     },
     {
       "customType": "regex",
-      "description": "Bump absent-metrics-operator image tag in kube-monitoring values.yaml",
-      "managerFilePatterns": [
-        "/^kube-monitoring/charts/values\\.yaml$/"
-      ],
-      "matchStrings": [
-        "repository:\\s*cloudoperators/absent-metrics-operator\\n\\s*tag:\\s*\"?(?<currentValue>[^\"\\s@]+)"
-      ],
-      "datasourceTemplate": "docker",
-      "depNameTemplate": "ghcr.io/cloudoperators/absent-metrics-operator",
-      "registryUrlTemplate": "https://ghcr.io",
-      "currentValueTemplate": "edge"
-    },
-    {
-      "customType": "regex",
       "description": "Bump shoot-grafter helmChart.version in plugindefinition.yaml",
       "managerFilePatterns": [
         "/^shoot-grafter/plugindefinition\\.yaml$/"
