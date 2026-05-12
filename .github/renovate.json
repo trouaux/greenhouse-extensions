@@ -320,9 +320,6 @@
       ]
     },
     {
-      "matchFileNames": [
-        "kube-monitoring/charts/values.yaml"
-      ],
       "matchPackageNames": [
         "/absent-metrics-operator/"
       ],
