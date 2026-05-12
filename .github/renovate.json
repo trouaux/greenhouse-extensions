@@ -324,7 +324,7 @@
         "helmv3"
       ],
       "matchFileNames": [
-        "kube-monitoring/charts/value.yaml"
+        "kube-monitoring/charts/values.yaml"
       ],
       "pinDigests": true
     },
@@ -333,12 +333,11 @@
         "helmv3"
       ],
       "matchFileNames": [
-        "kube-monitoring/charts/value.yaml"
+        "kube-monitoring/charts/values.yaml"
       ],
       "matchPackageNames": [
-        "absent-metrics-operator"
+        "ghcr.io/cloudoperators/absent-metrics-operator"
       ],
-      "packageName": "ghcr.io/cloudoperators/absent-metrics-operator",
       "registryUrls": [
         "https://ghcr.io"
       ],
