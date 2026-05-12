@@ -329,6 +329,22 @@
       "pinDigests": true
     },
     {
+      "matchManagers": [
+        "helmv3"
+      ],
+      "matchFileNames": [
+        "kube-monitoring/charts/value.yaml"
+      ],
+      "matchPackageNames": [
+        "absent-metrics-operator"
+      ],
+      "datasource": "docker",
+      "packageName": "ghcr.io/cloudoperators/absent-metrics-operator",
+      "registryUrls": [
+        "https://ghcr.io"
+      ]
+    },
+    {
       "groupName": "npm dependencies",
       "matchDatasources": [
         "npm"
