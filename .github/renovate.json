@@ -321,7 +321,7 @@
     },
     {
       "matchManagers": [
-        "helmv3"
+        "helm-values"
       ],
       "matchFileNames": [
         "kube-monitoring/charts/values.yaml"
@@ -330,7 +330,7 @@
     },
     {
       "matchManagers": [
-        "helmv3"
+        "helm-values"
       ],
       "matchFileNames": [
         "kube-monitoring/charts/values.yaml"
