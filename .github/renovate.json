@@ -327,7 +327,7 @@
         "kube-monitoring/charts/values.yaml"
       ],
       "matchPackageNames": [
-        "ghcr.io/cloudoperators/absent-metrics-operator"
+        "/absent-metrics-operator/"
       ],
       "registryUrls": [
         "https://ghcr.io"
