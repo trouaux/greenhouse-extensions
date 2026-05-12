@@ -372,7 +372,8 @@
       "description": "Only consider sha- prefixed tags for absent-metrics-operator; docker versioning uses registry creation timestamps for ordering",
       "matchPackageNames": ["ghcr.io/cloudoperators/absent-metrics-operator"],
       "matchManagers": ["custom.regex"],
-      "allowedVersions": "/^sha-[a-f0-9]+$/"
+      "allowedVersions": "/^sha-[a-f0-9]+$/",
+      "pinDigests": true
     },
     {
       "matchManagers": [
