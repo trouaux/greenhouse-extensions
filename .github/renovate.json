@@ -10,10 +10,11 @@
       "customType": "regex",
       "description": "Bump ingress-nginx version in the plugindefinition",
       "managerFilePatterns": [
-        "/^ingress-nginx.plugindefinition.yaml$/"
+        "/^ingress-nginx/plugindefinition\\.yaml$/"
       ],
       "matchStrings": [
-        "helmChart:\\s*name:\\s*.*\\s*repository:\\s*.*\\s*version\\s*\\:\\s*v?(?<currentValue>(?:\\d+\\.){0,2}\\d+)"
+        "spec:\\s*\\n\\s+version:\\s*(?<currentValue>\\d+\\.\\d+\\.\\d+)",
+        "helmChart:\\s*\\n\\s+name:\\s*ingress-nginx\\s*\\n\\s+repository:\\s*.*\\s*\\n\\s+version:\\s*v?(?<currentValue>(?:\\d+\\.){0,2}\\d+)"
       ],
       "datasourceTemplate": "github-tags",
       "depNameTemplate": "kubernetes/ingress-nginx",
