@@ -200,7 +200,8 @@
       ],
       "datasourceTemplate": "docker",
       "depNameTemplate": "ghcr.io/cloudoperators/absent-metrics-operator",
-      "registryUrlTemplate": "https://ghcr.io"
+      "registryUrlTemplate": "https://ghcr.io",
+      "currentValueTemplate": "edge"
     },
     {
       "customType": "regex",
