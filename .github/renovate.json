@@ -21,6 +21,19 @@
     },
     {
       "customType": "regex",
+      "description": "Bump absent-metrics-operator image tag in kube-monitoring values.yaml",
+      "managerFilePatterns": [
+        "/^kube-monitoring/charts/values\\.yaml$/"
+      ],
+      "matchStrings": [
+        "absentMetricsOperator:[\\s\\S]*?image:[\\s\\S]*?registry:\\s*ghcr\\.io[\\s\\S]*?repository:\\s*cloudoperators/absent-metrics-operator[\\s\\S]*?tag:\\s*\"(?<currentValue>sha-[a-f0-9]+)\""
+      ],
+      "datasourceTemplate": "docker",
+      "depNameTemplate": "ghcr.io/cloudoperators/absent-metrics-operator",
+      "versioningTemplate": "loose"
+    },
+    {
+      "customType": "regex",
       "description": "Bump external-dns version in the plugindefinition",
       "managerFilePatterns": [
         "/^external-dns.plugindefinition.yaml$/"
