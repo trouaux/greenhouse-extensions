@@ -504,7 +504,7 @@ absentMetricsOperator:
   image:
     registry: ghcr.io
     repository: cloudoperators/absent-metrics-operator
-    tag: "sha-54172e4cf05079d5895edc0ce6547f5a6008f264"
+    tag: "sha-54172e4cf05079d5895edc0ce6547f5a6008f264@sha256:c00f9dc9b1a66e828f5a0535f1db2ed29ccad255fadad09168b3c40da725e1c4"
   # @ignored
   imagePullPolicy: IfNotPresent
 
@@ -514,7 +514,7 @@ testFramework:
   image:
     registry: ghcr.io
     repository: cloudoperators/greenhouse-extensions-integration-test
-    tag: v0.0.1
+    tag: v0.0.1@sha256:1f174121f5f6dbe57d8557fbbfe5f3e98de9a68aa5b9ef3a36f9c2ee425268a3
   imagePullPolicy: IfNotPresent
 
 blackboxExporter:
