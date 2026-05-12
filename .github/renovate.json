@@ -342,7 +342,8 @@
       "packageName": "ghcr.io/cloudoperators/absent-metrics-operator",
       "registryUrls": [
         "https://ghcr.io"
-      ]
+      ],
+      "pinDigests": true
     },
     {
       "groupName": "npm dependencies",
