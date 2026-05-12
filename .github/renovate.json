@@ -30,7 +30,7 @@
       ],
       "datasourceTemplate": "docker",
       "depNameTemplate": "ghcr.io/cloudoperators/absent-metrics-operator",
-      "versioningTemplate": "regex:^sha-(?<major>[a-f0-9]+)$",
+      "versioningTemplate": "loose",
       "autoReplaceStringTemplate": "{{#if newDigest}}tag: \"{{{newValue}}}\"@{{{newDigest}}}{{else}}tag: \"{{{newValue}}}\"{{/if}}"
     },
     {
@@ -367,12 +367,6 @@
         "Makefile"
       ],
       "groupName": "Makefile dependencies"
-    },
-    {
-      "description": "Allow large major increments for SHA-based absent-metrics-operator tags",
-      "matchPackageNames": ["ghcr.io/cloudoperators/absent-metrics-operator"],
-      "matchManagers": ["custom.regex"],
-      "maxMajorIncrement": 9999999
     },
     {
       "matchManagers": [
