@@ -341,6 +341,7 @@
       "registryUrls": [
         "https://ghcr.io"
       ],
+      "followTag": "latest",
       "pinDigests": true
     },
     {
