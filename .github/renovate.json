@@ -326,22 +326,13 @@
       "matchFileNames": [
         "kube-monitoring/charts/values.yaml"
       ],
-      "pinDigests": true
-    },
-    {
-      "matchManagers": [
-        "helm-values"
-      ],
-      "matchFileNames": [
-        "kube-monitoring/charts/values.yaml"
-      ],
       "matchPackageNames": [
         "ghcr.io/cloudoperators/absent-metrics-operator"
       ],
       "registryUrls": [
         "https://ghcr.io"
       ],
-      "followTag": "latest",
+      "followTag": "edge",
       "pinDigests": true
     },
     {
