@@ -326,9 +326,6 @@
       "matchPackageNames": [
         "/absent-metrics-operator/"
       ],
-      "registryUrls": [
-        "https://ghcr.io"
-      ],
       "followTag": "edge",
       "pinDigests": true
     },
