@@ -30,7 +30,7 @@
       ],
       "datasourceTemplate": "docker",
       "depNameTemplate": "ghcr.io/cloudoperators/absent-metrics-operator",
-      "versioningTemplate": "loose"
+      "autoReplaceStringTemplate": "{{#if newDigest}}tag: \"{{{newValue}}}\"@{{{newDigest}}}{{else}}tag: \"{{{newValue}}}\"{{/if}}"
     },
     {
       "customType": "regex",
