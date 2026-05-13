@@ -324,7 +324,7 @@
         "/absent-metrics-operator/"
       ],
       "ignorePaths": [
-        "**/absent-metrics-operator/charts/**"
+        "absent-metrics-operator/**"
       ],
       "followTag": "edge",
       "pinDigests": true,
@@ -419,8 +419,5 @@
       ]
     }
   ],
-  "separateMinorPatch": true,
-  "ignorePaths": [
-    "absent-metrics-operator/**"
-  ]
+  "separateMinorPatch": true
 }
