@@ -419,5 +419,8 @@
       ]
     }
   ],
-  "separateMinorPatch": true
+  "separateMinorPatch": true,
+  "ignorePaths": [
+    "absent-metrics-operator/**"
+  ]
 }
