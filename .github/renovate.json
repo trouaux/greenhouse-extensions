@@ -323,6 +323,9 @@
       "matchPackageNames": [
         "/absent-metrics-operator/"
       ],
+      "ignorePaths": [
+        "**/absent-metrics-operator/charts/**"
+      ],
       "followTag": "edge",
       "pinDigests": true,
       "bumpVersions": [
