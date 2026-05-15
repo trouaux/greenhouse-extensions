@@ -196,25 +196,45 @@
     },
     {
       "matchPackageNames": [
-        "/opentelemetry-operator/",
-        "/shoot-grafter/",
-        "/ghcr.io/cloudoperators/shoot-grafter/"
+        "/opentelemetry-operator/"
       ],
       "bumpVersions": [
         {
           "filePatterns": ["{{packageFileDir}}/Chart.yaml"],
           "matchStrings": ["\\nversion:\\s*(?<version>\\d+\\.\\d+\\.\\d+)"],
-          "bumpType": "semver"
+          "bumpType": "patch"
         },
         {
           "filePatterns": ["{{replace '/charts?$' '' packageFileDir}}/plugindefinition.yaml"],
           "matchStrings": ["spec:\\s*\\n\\s+version:\\s*(?<version>\\d+\\.\\d+\\.\\d+)"],
-          "bumpType": "semver"
+          "bumpType": "patch"
         },
         {
           "filePatterns": ["{{replace '/charts?$' '' packageFileDir}}/plugindefinition.yaml"],
           "matchStrings": ["helmChart:\\s*\\n(?:\\s*#[^\\n]*\\n)?\\s*name:[^\\n]*\\n\\s*repository:[^\\n]*\\n\\s*version:\\s*(?<version>\\d+\\.\\d+\\.\\d+)"],
-          "bumpType": "semver"
+          "bumpType": "patch"
+        }
+      ]
+    },
+    {
+      "matchPackageNames": [
+        "/shoot-grafter/"
+      ],
+      "bumpVersions": [
+        {
+          "filePatterns": ["{{packageFileDir}}/Chart.yaml"],
+          "matchStrings": ["\\nversion:\\s*(?<version>\\d+\\.\\d+\\.\\d+)"],
+          "bumpType": "sync"
+        },
+        {
+          "filePatterns": ["{{replace '/charts?$' '' packageFileDir}}/plugindefinition.yaml"],
+          "matchStrings": ["spec:\\s*\\n\\s+version:\\s*(?<version>\\d+\\.\\d+\\.\\d+)"],
+          "bumpType": "sync"
+        },
+        {
+          "filePatterns": ["{{replace '/charts?$' '' packageFileDir}}/plugindefinition.yaml"],
+          "matchStrings": ["helmChart:\\s*\\n(?:\\s*#[^\\n]*\\n)?\\s*name:[^\\n]*\\n\\s*repository:[^\\n]*\\n\\s*version:\\s*(?<version>\\d+\\.\\d+\\.\\d+)"],
+          "bumpType": "sync"
         }
       ]
     },
