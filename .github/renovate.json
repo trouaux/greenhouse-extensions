@@ -155,7 +155,7 @@
         "/^shoot-grafter/charts/Chart\\.yaml$/"
       ],
       "matchStrings": [
-        "appVersion:\\s*\"v?(?<currentValue>\\d+\\.\\d+\\.\\d+)\""
+        "appVersion:\\s*\"(?<currentValue>v?\\d+\\.\\d+\\.\\d+)\""
       ],
       "datasourceTemplate": "docker",
       "depNameTemplate": "ghcr.io/cloudoperators/shoot-grafter",
