@@ -240,6 +240,11 @@
       "matchPackageNames": [
         "/opentelemetry-operator/"
       ],
+      "postUpgradeTasks": {
+        "commands": ["make generate-readme PLUGIN=logs"],
+        "fileFilters": ["logs/README.md"],
+        "executionMode": "update"
+      },
       "bumpVersions": [
         {
           "filePatterns": ["{{packageFileDir}}/Chart.yaml"],
