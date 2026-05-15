@@ -150,16 +150,15 @@
     },
     {
       "customType": "regex",
-      "description": "Bump shoot-grafter helmChart.version in plugindefinition.yaml",
+      "description": "Update shoot-grafter appVersion in Chart.yaml",
       "managerFilePatterns": [
-        "/^shoot-grafter/plugindefinition\\.yaml$/"
+        "/^shoot-grafter/charts/Chart\\.yaml$/"
       ],
       "matchStrings": [
-        "helmChart:\\n\\s+name:\\s*shoot-grafter\\n\\s+repository:[^\\n]*\\n\\s+version:\\s*(?<currentValue>\\d+\\.\\d+\\.\\d+)"
+        "appVersion:\\s*\"(?<currentValue>v?\\d+\\.\\d+\\.\\d+)\""
       ],
       "datasourceTemplate": "docker",
       "depNameTemplate": "ghcr.io/cloudoperators/shoot-grafter",
-      "extractVersionTemplate": "^v?(?<version>.*)$",
       "versioningTemplate": "semver"
     }
   ],
@@ -199,7 +198,7 @@
       "matchPackageNames": [
         "/opentelemetry-operator/",
         "/shoot-grafter/",
-        "ghcr.io/cloudoperators/shoot-grafter"
+        "/ghcr.io/cloudoperators/shoot-grafter/"
       ],
       "bumpVersions": [
         {
@@ -385,8 +384,7 @@
       "matchFileNames": [
         "ingress-nginx/plugindefinition.yaml",
         "external-dns/plugindefinition.yaml",
-        "reloader/plugindefinition.yaml",
-        "shoot-grafter/plugindefinition.yaml"
+        "reloader/plugindefinition.yaml"
       ],
       "matchManagers": [
         "custom.regex"
