@@ -403,8 +403,5 @@
   "separateMinorPatch": true,
   "ignorePaths": [
     "absent-metrics-operator/**"
-  ],
-  "allowedCommands": [
-    "^make generate-readme PLUGIN=\\w+$"
   ]
 }
