@@ -173,25 +173,46 @@
     {
       "matchPackageNames": [
         "/absent-metrics-operator/",
-        "/opentelemetry-operator/",
-        "/shoot-grafter/"
+        "/opentelemetry-operator/"
       ],
       "pinDigests": true,
       "bumpVersions": [
         {
           "filePatterns": ["{{packageFileDir}}/Chart.yaml"],
           "matchStrings": ["\\nversion:\\s*(?<version>\\d+\\.\\d+\\.\\d+)"],
-          "bumpType": "{{#if isPatch}}patch{{else if isMajor}}major{{else}}minor{{/if}}"
+          "bumpType": "patch"
         },
         {
           "filePatterns": ["{{replace '/charts?$' '' packageFileDir}}/plugindefinition.yaml"],
-          "matchStrings": ["spec:\\s*\\n\\s+version:\\s*(?<version>\\d+\\.\\d+\\.\\d+)"],
-          "bumpType": "{{#if isPatch}}patch{{else if isMajor}}major{{else}}minor{{/if}}"
+          "matchStrings": ["spec:\\s*\\n(?:  [^\\n]*\\n)*?  version:\\s*(?<version>\\d+\\.\\d+\\.\\d+)"],
+          "bumpType": "patch"
         },
         {
           "filePatterns": ["{{replace '/charts?$' '' packageFileDir}}/plugindefinition.yaml"],
           "matchStrings": ["helmChart:\\s*\\n(?:\\s*#[^\\n]*\\n)?\\s*name:[^\\n]*\\n\\s*repository:[^\\n]*\\n\\s*version:\\s*(?<version>\\d+\\.\\d+\\.\\d+)"],
-          "bumpType": "{{#if isPatch}}patch{{else if isMajor}}major{{else}}minor{{/if}}"
+          "bumpType": "patch"
+        }
+      ]
+    },
+    {
+      "matchPackageNames": [
+        "/shoot-grafter/"
+      ],
+      "bumpVersions": [
+        {
+          "filePatterns": ["{{packageFileDir}}/Chart.yaml"],
+          "matchStrings": ["\\nversion:\\s*(?<version>\\d+\\.\\d+\\.\\d+)"],
+          "bumpType": "sync"
+        },
+        {
+          "filePatterns": ["{{replace '/charts?$' '' packageFileDir}}/plugindefinition.yaml"],
+          "matchStrings": ["\\n  version:\\s*(?<version>\\d+\\.\\d+\\.\\d+)"],
+          "bumpType": "sync"
+        },
+        {
+          "filePatterns": ["{{replace '/charts?$' '' packageFileDir}}/plugindefinition.yaml"],
+          "matchStrings": ["helmChart:\\s*\\n(?:\\s*#[^\\n]*\\n)?\\s*name:[^\\n]*\\n\\s*repository:[^\\n]*\\n\\s*version:\\s*(?<version>\\d+\\.\\d+\\.\\d+)"],
+          "bumpType": "sync"
         }
       ]
     },
@@ -230,7 +251,7 @@
       "bumpVersions": [
         {
           "filePatterns": ["{{replace '/charts?$' '' packageFileDir}}/plugindefinition.yaml"],
-          "matchStrings": ["spec:\\s*\\n\\s+version:\\s*(?<version>\\d+\\.\\d+\\.\\d+)"],
+          "matchStrings": ["spec:\\s*\\n(?:  [^\\n]*\\n)*?  version:\\s*(?<version>\\d+\\.\\d+\\.\\d+)"],
           "bumpType": "{{#if isPatch}}patch{{else if isMajor}}major{{else}}minor{{/if}}"
         },
         {
@@ -261,7 +282,7 @@
       "bumpVersions": [
         {
           "filePatterns": ["{{replace '/charts?$' '' packageFileDir}}/plugindefinition.yaml"],
-          "matchStrings": ["spec:\\s*\\n\\s+version:\\s*(?<version>\\d+\\.\\d+\\.\\d+)"],
+          "matchStrings": ["spec:\\s*\\n(?:  [^\\n]*\\n)*?  version:\\s*(?<version>\\d+\\.\\d+\\.\\d+)"],
           "bumpType": "{{#if isPatch}}patch{{else if isMajor}}major{{else}}minor{{/if}}"
         },
         {
@@ -292,7 +313,7 @@
       "bumpVersions": [
         {
           "filePatterns": ["{{replace '/charts?$' '' packageFileDir}}/plugindefinition.yaml"],
-          "matchStrings": ["spec:\\s*\\n\\s+version:\\s*(?<version>\\d+\\.\\d+\\.\\d+)"],
+          "matchStrings": ["spec:\\s*\\n(?:  [^\\n]*\\n)*?  version:\\s*(?<version>\\d+\\.\\d+\\.\\d+)"],
           "bumpType": "{{#if isPatch}}patch{{else if isMajor}}major{{else}}minor{{/if}}"
         },
         {
@@ -369,7 +390,7 @@
       "bumpVersions": [
         {
           "filePatterns": ["{{packageFileDir}}/plugindefinition.yaml"],
-          "matchStrings": ["spec:\\s*\\n\\s+version:\\s*(?<version>\\d+\\.\\d+\\.\\d+)"],
+          "matchStrings": ["spec:\\s*\\n(?:  [^\\n]*\\n)*?  version:\\s*(?<version>\\d+\\.\\d+\\.\\d+)"],
           "bumpType": "{{#if isPatch}}patch{{else if isMajor}}major{{else}}minor{{/if}}"
         }
       ]
