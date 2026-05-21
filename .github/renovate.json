@@ -173,7 +173,9 @@
     {
       "matchPackageNames": [
         "/absent-metrics-operator/",
-        "/opentelemetry-operator/"
+        "/opentelemetry-operator/",
+        "/kube-rbac-proxy/",
+        "/http-https-echo/"
       ],
       "pinDigests": true,
       "bumpVersions": [
