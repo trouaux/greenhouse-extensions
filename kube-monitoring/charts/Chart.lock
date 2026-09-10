@@ -1,12 +1,12 @@
 dependencies:
 - name: kube-prometheus-stack
   repository: https://prometheus-community.github.io/helm-charts
-  version: 85.0.3
+  version: 85.4.0
 - name: kubernetes-operations
   repository: https://cloudoperators.github.io/kubernetes-operations
   version: 1.2.9
 - name: prometheus-blackbox-exporter
   repository: https://prometheus-community.github.io/helm-charts
   version: 11.9.2
-digest: sha256:c62f668295144276cde6faeef85bbc3568e87680079c812e7336830427967e5e
-generated: "2026-05-21T13:47:56.781577108Z"
+digest: sha256:db1e4dd294abd7a905654374f43db48b04de6acd19e9ba9300672ed4267b03cc
+generated: "2026-09-10T20:08:17.020390371Z"
